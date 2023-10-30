@@ -18,7 +18,6 @@ def get_image(base64_string):
 with st.sidebar:
     st.session_state.openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
     "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
-    "[View the source code](https://github.com/streamlit/llm-examples/blob/main/Chatbot.py)"
     "[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/llm-examples?quickstart=1)"
     if "json_messages" in st.session_state:
         json_string = json.dumps(st.session_state['json_messages'])
@@ -45,7 +44,8 @@ if "messages" in st.session_state:
             st.chat_message(msg["role"]).write(msg['content'])
         elif isinstance(msg['content'], SmartDataframe):
             with st.chat_message(msg["role"]):
-                st.dataframe(msg['content'])
+                response = pd.DataFrame(msg['content'], columns=msg['content'].columns)
+                st.dataframe(response)
         elif isinstance(msg['content'], Image.Image):
             with st.chat_message(msg["role"]):
                 st.image(msg['content'])
@@ -78,6 +78,7 @@ if prompt := st.chat_input():
             st.session_state.json_messages.append({"role": "assistant", "content": response })
         elif type(response) is SmartDataframe:
             with st.chat_message("assistant"):
+                response = pd.DataFrame(response, columns=response.columns)
                 st.dataframe(response)
             st.session_state.json_messages.append({"role": "assistant", "content": str(response) })
 
