@@ -12219,3 +12219,686 @@ def analyze_data(dfs: list[pd.DataFrame]) ->dict:
 25  ING TRx  INGREZZA  0013600001VxY2g         MICHAEL KWIAT       96.2       0.00  49.790672  115.038614  0.656682   6.566818  High}
 2023-10-30 11:43:58 [INFO] Executed in: 24.765252828598022s
 2023-10-30 12:25:00 [INFO] error_code=None error_message='{\'role\': \'assistant\', \'content\': \'The words "affect" and "effect" are commonly confused because they sound similar and have related meanings, but they are used in different ways:\\n\\n1. Affect: This is primarily used as a verb and refers to the act of influencing or causing a change in something. It is often used to describe the impact something has on someone or something. For example:\\n   - The loud noise affected my concentration.\\n   - The new policy will affect all employees.\\n\\n2. Effect: This is primarily used as a noun and refers to the result or consequence of something. It describes what happens as a result of an action or event. For example:\\n   - The loud noise had a negative effect on my concentration.\\n   - The new policy had a significant effect on the company\\\'s profitability.\\n\\nIn summary, "affect" is a verb that means to influence or cause a change, while "effect" is a noun that refers to the result or consequence of something.\'} is not of type \'string\' - \'messages.3.content\'' error_param=None error_type=invalid_request_error message='OpenAI API error received' stream_error=False
+2023-10-30 15:50:25 [INFO] Question: Get all the rows with label high
+2023-10-30 15:50:26 [INFO] Running PandasAI with openai LLM...
+2023-10-30 15:50:26 [INFO] Prompt ID: 0d2a58dd-0fb2-4d7f-ad7d-732aa4065245
+2023-10-30 15:50:26 [INFO] Using cached response
+2023-10-30 15:50:26 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    
+    # Filter rows with label "High"
+    high_rows = dfs[0][dfs[0]['LABEL'] == 'High']
+    
+    # Return the filtered rows as a dataframe
+    return {"type": "dataframe", "value": high_rows}
+```
+
+2023-10-30 15:50:26 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    high_rows = dfs[0][dfs[0]['LABEL'] == 'High']
+    return {'type': 'dataframe', 'value': high_rows}
+        ```
+2023-10-30 15:50:26 [INFO] Answer: {'type': 'dataframe', 'value':    kri_name   product       speaker_id          speaker_name  ING_Count  OLD Score        AVG         STD    N DIST  New Score LABEL
+0   ING TRx  INGREZZA  00136000016woDx         ROBERT MORTON     1330.2      10.00  49.790672  115.038614  1.000000  10.000000  High
+1   ING TRx  INGREZZA  00136000013Opa5           VADIM BARAM      815.6       5.77  49.790672  115.038614  1.000000  10.000000  High
+2   ING TRx  INGREZZA  00136000013Op3o           AMITA PATEL      615.4       4.13  49.790672  115.038614  1.000000   9.999996  High
+3   ING TRx  INGREZZA  0011Q00002Cd3pl      FARRUKH KUREISHY      572.0       3.77  49.790672  115.038614  0.999997   9.999972  High
+4   ING TRx  INGREZZA  0013600001oj4QM       JULIE WATERBURY      537.8       3.49  49.790672  115.038614  0.999989   9.999889  High
+5   ING TRx  INGREZZA  00136000013OoTi          ROMEO ISIDRO      293.4       1.48  49.790672  115.038614  0.982897   9.828968  High
+6   ING TRx  INGREZZA  00136000013OoYy            JOSE GAMEZ      218.0       0.86  49.790672  115.038614  0.928157   9.281566  High
+7   ING TRx  INGREZZA  00136000013Or4J           ISAK ISAKOV      201.2       0.73  49.790672  115.038614  0.905940   9.059400  High
+8   ING TRx  INGREZZA  0013600000QGiVU        RICHARD TROSCH      173.6       0.50  49.790672  115.038614  0.859090   8.590904  High
+9   ING TRx  INGREZZA  0013600001HkivQ            AMY BELNAP      169.0       0.46  49.790672  115.038614  0.849958   8.499584  High
+10  ING TRx  INGREZZA  0013600001rdpLd     BENEDETTO PALOMBO      169.0       0.46  49.790672  115.038614  0.849958   8.499584  High
+11  ING TRx  INGREZZA  00136000013OqGg   CHERIAN KARUNAPUZHA      168.6       0.46  49.790672  115.038614  0.849146   8.491461  High
+12  ING TRx  INGREZZA  0013600000Ry1CU  KHASHAYAR DASHTIPOUR      157.7       0.37  49.790672  115.038614  0.825885   8.258847  High
+13  ING TRx  INGREZZA  00136000013OpUq       EDWARD FRUITMAN      155.0       0.35  49.790672  115.038614  0.819788   8.197878  High
+14  ING TRx  INGREZZA  00136000013OpdA            KEVIN MAYS      146.4       0.28  49.790672  115.038614  0.799489   7.994895  High
+15  ING TRx  INGREZZA  00136000013Ooro            TODD GATES      129.2       0.13  49.790672  115.038614  0.754992   7.549922  High
+16  ING TRx  INGREZZA  0013600001Jqm4g        JAYSON GESULGA      123.8       0.09  49.790672  115.038614  0.739999   7.399993  High
+17  ING TRx  INGREZZA  00136000013RC8S          JILL TOLIVER      113.5       0.01  49.790672  115.038614  0.710145   7.101449  High
+18  ING TRx  INGREZZA  00136000013OpZi        FRANK ABENANTE      110.0       0.00  49.790672  115.038614  0.699646   6.996463  High
+19  ING TRx  INGREZZA  0011Q00002G32dS        ANGELA EUBANKS      108.0       0.00  49.790672  115.038614  0.693571   6.935710  High
+20  ING TRx  INGREZZA  00136000013RBtS        ILYA ROZENBERG      108.0       0.00  49.790672  115.038614  0.693571   6.935710  High
+21  ING TRx  INGREZZA  0011Q000026vXha           TRACY HICKS      107.4       0.00  49.790672  115.038614  0.691738   6.917379  High
+22  ING TRx  INGREZZA  00136000016vhJX         NIRAV PAVASIA      101.3       0.00  49.790672  115.038614  0.672836   6.728357  High
+23  ING TRx  INGREZZA  0013600000QGiU6          PRATAP CHAND       99.5       0.00  49.790672  115.038614  0.667169   6.671692  High
+24  ING TRx  INGREZZA  00136000015uMz5      MONIQUE GONZALEZ       98.9       0.00  49.790672  115.038614  0.665272   6.652718  High
+25  ING TRx  INGREZZA  0013600001VxY2g         MICHAEL KWIAT       96.2       0.00  49.790672  115.038614  0.656682   6.566818  High}
+2023-10-30 15:50:26 [INFO] Executed in: 0.9645452499389648s
+2023-10-30 15:52:01 [INFO] Question: Get all the rows with label high
+2023-10-30 15:52:01 [INFO] Running PandasAI with openai LLM...
+2023-10-30 15:52:01 [INFO] Prompt ID: d8f71965-5549-4838-9dc4-8acdc0f76fbd
+2023-10-30 15:52:01 [INFO] Using cached response
+2023-10-30 15:52:01 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    
+    # Filter rows with label "High"
+    high_rows = dfs[0][dfs[0]['LABEL'] == 'High']
+    
+    # Return the filtered rows as a dataframe
+    return {"type": "dataframe", "value": high_rows}
+```
+
+2023-10-30 15:52:01 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    high_rows = dfs[0][dfs[0]['LABEL'] == 'High']
+    return {'type': 'dataframe', 'value': high_rows}
+        ```
+2023-10-30 15:52:01 [INFO] Answer: {'type': 'dataframe', 'value':    kri_name   product       speaker_id          speaker_name  ING_Count  OLD Score        AVG         STD    N DIST  New Score LABEL
+0   ING TRx  INGREZZA  00136000016woDx         ROBERT MORTON     1330.2      10.00  49.790672  115.038614  1.000000  10.000000  High
+1   ING TRx  INGREZZA  00136000013Opa5           VADIM BARAM      815.6       5.77  49.790672  115.038614  1.000000  10.000000  High
+2   ING TRx  INGREZZA  00136000013Op3o           AMITA PATEL      615.4       4.13  49.790672  115.038614  1.000000   9.999996  High
+3   ING TRx  INGREZZA  0011Q00002Cd3pl      FARRUKH KUREISHY      572.0       3.77  49.790672  115.038614  0.999997   9.999972  High
+4   ING TRx  INGREZZA  0013600001oj4QM       JULIE WATERBURY      537.8       3.49  49.790672  115.038614  0.999989   9.999889  High
+5   ING TRx  INGREZZA  00136000013OoTi          ROMEO ISIDRO      293.4       1.48  49.790672  115.038614  0.982897   9.828968  High
+6   ING TRx  INGREZZA  00136000013OoYy            JOSE GAMEZ      218.0       0.86  49.790672  115.038614  0.928157   9.281566  High
+7   ING TRx  INGREZZA  00136000013Or4J           ISAK ISAKOV      201.2       0.73  49.790672  115.038614  0.905940   9.059400  High
+8   ING TRx  INGREZZA  0013600000QGiVU        RICHARD TROSCH      173.6       0.50  49.790672  115.038614  0.859090   8.590904  High
+9   ING TRx  INGREZZA  0013600001HkivQ            AMY BELNAP      169.0       0.46  49.790672  115.038614  0.849958   8.499584  High
+10  ING TRx  INGREZZA  0013600001rdpLd     BENEDETTO PALOMBO      169.0       0.46  49.790672  115.038614  0.849958   8.499584  High
+11  ING TRx  INGREZZA  00136000013OqGg   CHERIAN KARUNAPUZHA      168.6       0.46  49.790672  115.038614  0.849146   8.491461  High
+12  ING TRx  INGREZZA  0013600000Ry1CU  KHASHAYAR DASHTIPOUR      157.7       0.37  49.790672  115.038614  0.825885   8.258847  High
+13  ING TRx  INGREZZA  00136000013OpUq       EDWARD FRUITMAN      155.0       0.35  49.790672  115.038614  0.819788   8.197878  High
+14  ING TRx  INGREZZA  00136000013OpdA            KEVIN MAYS      146.4       0.28  49.790672  115.038614  0.799489   7.994895  High
+15  ING TRx  INGREZZA  00136000013Ooro            TODD GATES      129.2       0.13  49.790672  115.038614  0.754992   7.549922  High
+16  ING TRx  INGREZZA  0013600001Jqm4g        JAYSON GESULGA      123.8       0.09  49.790672  115.038614  0.739999   7.399993  High
+17  ING TRx  INGREZZA  00136000013RC8S          JILL TOLIVER      113.5       0.01  49.790672  115.038614  0.710145   7.101449  High
+18  ING TRx  INGREZZA  00136000013OpZi        FRANK ABENANTE      110.0       0.00  49.790672  115.038614  0.699646   6.996463  High
+19  ING TRx  INGREZZA  0011Q00002G32dS        ANGELA EUBANKS      108.0       0.00  49.790672  115.038614  0.693571   6.935710  High
+20  ING TRx  INGREZZA  00136000013RBtS        ILYA ROZENBERG      108.0       0.00  49.790672  115.038614  0.693571   6.935710  High
+21  ING TRx  INGREZZA  0011Q000026vXha           TRACY HICKS      107.4       0.00  49.790672  115.038614  0.691738   6.917379  High
+22  ING TRx  INGREZZA  00136000016vhJX         NIRAV PAVASIA      101.3       0.00  49.790672  115.038614  0.672836   6.728357  High
+23  ING TRx  INGREZZA  0013600000QGiU6          PRATAP CHAND       99.5       0.00  49.790672  115.038614  0.667169   6.671692  High
+24  ING TRx  INGREZZA  00136000015uMz5      MONIQUE GONZALEZ       98.9       0.00  49.790672  115.038614  0.665272   6.652718  High
+25  ING TRx  INGREZZA  0013600001VxY2g         MICHAEL KWIAT       96.2       0.00  49.790672  115.038614  0.656682   6.566818  High}
+2023-10-30 15:52:01 [INFO] Executed in: 0.20166659355163574s
+2023-10-30 15:53:33 [INFO] Question: Get all the rows label high.
+2023-10-30 15:53:34 [INFO] Running PandasAI with openai LLM...
+2023-10-30 15:53:34 [INFO] Prompt ID: 7f8d34fa-d92f-46b9-bc8d-293b4c5daacd
+2023-10-30 15:53:34 [INFO] Using prompt: You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 268 rows and 11 columns.
+This is the metadata of the dataframe dfs[0]:
+kri_name,product,speaker_id,speaker_name,ING_Count,OLD Score,AVG,STD,N DIST,New Score,LABEL
+ING TRx,INGREZZA,0011Q00002Cd3pl,FARRUKH KUREISHY,572.0,3.77,49.79067164179103,4754868074,0.9999971796277325,9.999971796277325,High
+ING TRx,INGREZZA,00136000016woDx,ROBERT MORTON,1330.2,10.0,49.79067164179103,4477873372,1.0,10.0,High
+ING TRx,INGREZZA,0013600001oj4QM,JULIE WATERBURY,537.8,3.49,49.79067164179103,2559839328,0.9999889298276239,9.999889298276239,High
+ING TRx,INGREZZA,00136000013Op3o,AMITA PATEL,615.4,4.13,49.79067164179103,9087816236,0.999999559903642,9.99999559903642,High
+ING TRx,INGREZZA,00136000013Opa5,VADIM BARAM,815.6,5.77,49.79067164179103,2326494994,0.9999999999860241,9.99999999986024,High
+</dataframe>
+
+<conversation>
+User: Get all the rows label high.
+</conversation>
+
+This is the initial python function. Do not change the params. Given the context, use the right dataframes.
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Take a deep breath and reason step-by-step. Act as a senior data analyst.
+In the answer, you must never write the "technical" names of the tables.
+Based on the last message in the conversation:
+- return the updated analyze_data function wrapped within ```python ```
+2023-10-30 15:54:01 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    
+    # Filter rows with label "High"
+    filtered_df = dfs[0][dfs[0]['LABEL'] == 'High']
+    
+    # Return the filtered dataframe
+    return {"type": "dataframe", "value": filtered_df}
+```
+
+2023-10-30 15:54:01 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    filtered_df = dfs[0][dfs[0]['LABEL'] == 'High']
+    return {'type': 'dataframe', 'value': filtered_df}
+        ```
+2023-10-30 15:54:01 [INFO] Answer: {'type': 'dataframe', 'value':    kri_name   product       speaker_id          speaker_name  ING_Count  OLD Score        AVG         STD    N DIST  New Score LABEL
+0   ING TRx  INGREZZA  00136000016woDx         ROBERT MORTON     1330.2      10.00  49.790672  115.038614  1.000000  10.000000  High
+1   ING TRx  INGREZZA  00136000013Opa5           VADIM BARAM      815.6       5.77  49.790672  115.038614  1.000000  10.000000  High
+2   ING TRx  INGREZZA  00136000013Op3o           AMITA PATEL      615.4       4.13  49.790672  115.038614  1.000000   9.999996  High
+3   ING TRx  INGREZZA  0011Q00002Cd3pl      FARRUKH KUREISHY      572.0       3.77  49.790672  115.038614  0.999997   9.999972  High
+4   ING TRx  INGREZZA  0013600001oj4QM       JULIE WATERBURY      537.8       3.49  49.790672  115.038614  0.999989   9.999889  High
+5   ING TRx  INGREZZA  00136000013OoTi          ROMEO ISIDRO      293.4       1.48  49.790672  115.038614  0.982897   9.828968  High
+6   ING TRx  INGREZZA  00136000013OoYy            JOSE GAMEZ      218.0       0.86  49.790672  115.038614  0.928157   9.281566  High
+7   ING TRx  INGREZZA  00136000013Or4J           ISAK ISAKOV      201.2       0.73  49.790672  115.038614  0.905940   9.059400  High
+8   ING TRx  INGREZZA  0013600000QGiVU        RICHARD TROSCH      173.6       0.50  49.790672  115.038614  0.859090   8.590904  High
+9   ING TRx  INGREZZA  0013600001HkivQ            AMY BELNAP      169.0       0.46  49.790672  115.038614  0.849958   8.499584  High
+10  ING TRx  INGREZZA  0013600001rdpLd     BENEDETTO PALOMBO      169.0       0.46  49.790672  115.038614  0.849958   8.499584  High
+11  ING TRx  INGREZZA  00136000013OqGg   CHERIAN KARUNAPUZHA      168.6       0.46  49.790672  115.038614  0.849146   8.491461  High
+12  ING TRx  INGREZZA  0013600000Ry1CU  KHASHAYAR DASHTIPOUR      157.7       0.37  49.790672  115.038614  0.825885   8.258847  High
+13  ING TRx  INGREZZA  00136000013OpUq       EDWARD FRUITMAN      155.0       0.35  49.790672  115.038614  0.819788   8.197878  High
+14  ING TRx  INGREZZA  00136000013OpdA            KEVIN MAYS      146.4       0.28  49.790672  115.038614  0.799489   7.994895  High
+15  ING TRx  INGREZZA  00136000013Ooro            TODD GATES      129.2       0.13  49.790672  115.038614  0.754992   7.549922  High
+16  ING TRx  INGREZZA  0013600001Jqm4g        JAYSON GESULGA      123.8       0.09  49.790672  115.038614  0.739999   7.399993  High
+17  ING TRx  INGREZZA  00136000013RC8S          JILL TOLIVER      113.5       0.01  49.790672  115.038614  0.710145   7.101449  High
+18  ING TRx  INGREZZA  00136000013OpZi        FRANK ABENANTE      110.0       0.00  49.790672  115.038614  0.699646   6.996463  High
+19  ING TRx  INGREZZA  0011Q00002G32dS        ANGELA EUBANKS      108.0       0.00  49.790672  115.038614  0.693571   6.935710  High
+20  ING TRx  INGREZZA  00136000013RBtS        ILYA ROZENBERG      108.0       0.00  49.790672  115.038614  0.693571   6.935710  High
+21  ING TRx  INGREZZA  0011Q000026vXha           TRACY HICKS      107.4       0.00  49.790672  115.038614  0.691738   6.917379  High
+22  ING TRx  INGREZZA  00136000016vhJX         NIRAV PAVASIA      101.3       0.00  49.790672  115.038614  0.672836   6.728357  High
+23  ING TRx  INGREZZA  0013600000QGiU6          PRATAP CHAND       99.5       0.00  49.790672  115.038614  0.667169   6.671692  High
+24  ING TRx  INGREZZA  00136000015uMz5      MONIQUE GONZALEZ       98.9       0.00  49.790672  115.038614  0.665272   6.652718  High
+25  ING TRx  INGREZZA  0013600001VxY2g         MICHAEL KWIAT       96.2       0.00  49.790672  115.038614  0.656682   6.566818  High}
+2023-10-30 15:54:01 [INFO] Executed in: 27.91864585876465s
+2023-10-30 15:58:36 [INFO] Question: Get all the rows with label high
+2023-10-30 15:58:36 [INFO] Running PandasAI with openai LLM...
+2023-10-30 15:58:36 [INFO] Prompt ID: 67e65832-25ad-4517-b5fd-3e73b91fe596
+2023-10-30 15:58:36 [INFO] Using cached response
+2023-10-30 15:58:36 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    
+    # Filter rows with label "High"
+    high_rows = dfs[0][dfs[0]['LABEL'] == 'High']
+    
+    # Return the filtered rows as a dataframe
+    return {"type": "dataframe", "value": high_rows}
+```
+
+2023-10-30 15:58:36 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    high_rows = dfs[0][dfs[0]['LABEL'] == 'High']
+    return {'type': 'dataframe', 'value': high_rows}
+        ```
+2023-10-30 15:58:36 [INFO] Answer: {'type': 'dataframe', 'value':    kri_name   product       speaker_id          speaker_name  ING_Count  OLD Score        AVG         STD    N DIST  New Score LABEL
+0   ING TRx  INGREZZA  00136000016woDx         ROBERT MORTON     1330.2      10.00  49.790672  115.038614  1.000000  10.000000  High
+1   ING TRx  INGREZZA  00136000013Opa5           VADIM BARAM      815.6       5.77  49.790672  115.038614  1.000000  10.000000  High
+2   ING TRx  INGREZZA  00136000013Op3o           AMITA PATEL      615.4       4.13  49.790672  115.038614  1.000000   9.999996  High
+3   ING TRx  INGREZZA  0011Q00002Cd3pl      FARRUKH KUREISHY      572.0       3.77  49.790672  115.038614  0.999997   9.999972  High
+4   ING TRx  INGREZZA  0013600001oj4QM       JULIE WATERBURY      537.8       3.49  49.790672  115.038614  0.999989   9.999889  High
+5   ING TRx  INGREZZA  00136000013OoTi          ROMEO ISIDRO      293.4       1.48  49.790672  115.038614  0.982897   9.828968  High
+6   ING TRx  INGREZZA  00136000013OoYy            JOSE GAMEZ      218.0       0.86  49.790672  115.038614  0.928157   9.281566  High
+7   ING TRx  INGREZZA  00136000013Or4J           ISAK ISAKOV      201.2       0.73  49.790672  115.038614  0.905940   9.059400  High
+8   ING TRx  INGREZZA  0013600000QGiVU        RICHARD TROSCH      173.6       0.50  49.790672  115.038614  0.859090   8.590904  High
+9   ING TRx  INGREZZA  0013600001HkivQ            AMY BELNAP      169.0       0.46  49.790672  115.038614  0.849958   8.499584  High
+10  ING TRx  INGREZZA  0013600001rdpLd     BENEDETTO PALOMBO      169.0       0.46  49.790672  115.038614  0.849958   8.499584  High
+11  ING TRx  INGREZZA  00136000013OqGg   CHERIAN KARUNAPUZHA      168.6       0.46  49.790672  115.038614  0.849146   8.491461  High
+12  ING TRx  INGREZZA  0013600000Ry1CU  KHASHAYAR DASHTIPOUR      157.7       0.37  49.790672  115.038614  0.825885   8.258847  High
+13  ING TRx  INGREZZA  00136000013OpUq       EDWARD FRUITMAN      155.0       0.35  49.790672  115.038614  0.819788   8.197878  High
+14  ING TRx  INGREZZA  00136000013OpdA            KEVIN MAYS      146.4       0.28  49.790672  115.038614  0.799489   7.994895  High
+15  ING TRx  INGREZZA  00136000013Ooro            TODD GATES      129.2       0.13  49.790672  115.038614  0.754992   7.549922  High
+16  ING TRx  INGREZZA  0013600001Jqm4g        JAYSON GESULGA      123.8       0.09  49.790672  115.038614  0.739999   7.399993  High
+17  ING TRx  INGREZZA  00136000013RC8S          JILL TOLIVER      113.5       0.01  49.790672  115.038614  0.710145   7.101449  High
+18  ING TRx  INGREZZA  00136000013OpZi        FRANK ABENANTE      110.0       0.00  49.790672  115.038614  0.699646   6.996463  High
+19  ING TRx  INGREZZA  0011Q00002G32dS        ANGELA EUBANKS      108.0       0.00  49.790672  115.038614  0.693571   6.935710  High
+20  ING TRx  INGREZZA  00136000013RBtS        ILYA ROZENBERG      108.0       0.00  49.790672  115.038614  0.693571   6.935710  High
+21  ING TRx  INGREZZA  0011Q000026vXha           TRACY HICKS      107.4       0.00  49.790672  115.038614  0.691738   6.917379  High
+22  ING TRx  INGREZZA  00136000016vhJX         NIRAV PAVASIA      101.3       0.00  49.790672  115.038614  0.672836   6.728357  High
+23  ING TRx  INGREZZA  0013600000QGiU6          PRATAP CHAND       99.5       0.00  49.790672  115.038614  0.667169   6.671692  High
+24  ING TRx  INGREZZA  00136000015uMz5      MONIQUE GONZALEZ       98.9       0.00  49.790672  115.038614  0.665272   6.652718  High
+25  ING TRx  INGREZZA  0013600001VxY2g         MICHAEL KWIAT       96.2       0.00  49.790672  115.038614  0.656682   6.566818  High}
+2023-10-30 15:58:36 [INFO] Executed in: 0.295957088470459s
+2023-10-30 16:16:14 [INFO] Question: Get all the rows with label low.
+2023-10-30 16:16:14 [INFO] Running PandasAI with openai LLM...
+2023-10-30 16:16:14 [INFO] Prompt ID: 7e75bb22-30a2-41ac-91bb-63c2a9035843
+2023-10-30 16:16:14 [INFO] Using cached response
+2023-10-30 16:16:14 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    
+    # Filter rows with label low
+    filtered_df = dfs[0][dfs[0]['LABEL'] == 'Low']
+    
+    # Return the filtered dataframe
+    return {"type": "dataframe", "value": filtered_df}
+```
+
+2023-10-30 16:16:14 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    filtered_df = dfs[0][dfs[0]['LABEL'] == 'Low']
+    return {'type': 'dataframe', 'value': filtered_df}
+        ```
+2023-10-30 16:16:14 [INFO] Answer: {'type': 'dataframe', 'value':     kri_name   product       speaker_id       speaker_name  ING_Count  OLD Score        AVG         STD    N DIST  New Score LABEL
+234  ING TRx  INGREZZA  00136000013Op8H     LAWRENCE ELMER        5.0        0.0  49.790672  115.038614  0.348507   3.485074   Low
+235  ING TRx  INGREZZA  0013600000IyGNk      JOSEPH MCEVOY        5.0        0.0  49.790672  115.038614  0.348507   3.485074   Low
+236  ING TRx  INGREZZA  0013600001Vxpds          LIN ZHANG        5.0        0.0  49.790672  115.038614  0.348507   3.485074   Low
+237  ING TRx  INGREZZA  0013600001Acol5      SHENG-HAN KUO        5.0        0.0  49.790672  115.038614  0.348507   3.485074   Low
+238  ING TRx  INGREZZA  00136000015T2o4         LOUIS CADY        5.0        0.0  49.790672  115.038614  0.348507   3.485074   Low
+239  ING TRx  INGREZZA  00136000013Rqe0  CHRISTOPHER WHITE        4.1        0.0  49.790672  115.038614  0.345619   3.456185   Low
+240  ING TRx  INGREZZA  00136000014yHGl    LARRY BORNSTEIN        4.0        0.0  49.790672  115.038614  0.345298   3.452981   Low
+241  ING TRx  INGREZZA  0013600001Jphvr        RAKESH AMIN        4.0        0.0  49.790672  115.038614  0.345298   3.452981   Low
+242  ING TRx  INGREZZA  00136000013OpnT       DAVID MEDINA        4.0        0.0  49.790672  115.038614  0.345298   3.452981   Low
+243  ING TRx  INGREZZA  0013600000QGiTR      DENIS MEE LEE        3.9        0.0  49.790672  115.038614  0.344978   3.449778   Low
+244  ING TRx  INGREZZA  00136000013OoWy  KISHOR ZINZUVADIA        3.6        0.0  49.790672  115.038614  0.344017   3.440175   Low
+245  ING TRx  INGREZZA  00136000013RCFO    PATRICK HANDLIN        3.3        0.0  49.790672  115.038614  0.343058   3.430582   Low
+246  ING TRx  INGREZZA  00136000013OolZ   DENNIS AUMENTADO        3.2        0.0  49.790672  115.038614  0.342739   3.427386   Low
+247  ING TRx  INGREZZA  0013600001Hm2TY    JORDAN HARBORTH        3.0        0.0  49.790672  115.038614  0.342100   3.420999   Low
+248  ING TRx  INGREZZA  0013600000MyyiA     GERALD MAGUIRE        3.0        0.0  49.790672  115.038614  0.342100   3.420999   Low
+249  ING TRx  INGREZZA  0013600000QGiUi      CHERYL WATERS        3.0        0.0  49.790672  115.038614  0.342100   3.420999   Low
+250  ING TRx  INGREZZA  0013600000VQVqu     NISHA CHHABRIA        3.0        0.0  49.790672  115.038614  0.342100   3.420999   Low
+251  ING TRx  INGREZZA  00136000013OrKR      PATRICK HOGAN        3.0        0.0  49.790672  115.038614  0.342100   3.420999   Low
+252  ING TRx  INGREZZA  0013600001szfjM     HEATHER WARREN        2.4        0.0  49.790672  115.038614  0.340186   3.401864   Low
+253  ING TRx  INGREZZA  0011Q00001z9KY2    MARTIN GUERRERO        2.2        0.0  49.790672  115.038614  0.339549   3.395495   Low
+254  ING TRx  INGREZZA  00136000013OqRc      DAVID WICHMAN        2.0        0.0  49.790672  115.038614  0.338913   3.389130   Low
+255  ING TRx  INGREZZA  0013600000QGiTL      MATTHEW BRAMS        2.0        0.0  49.790672  115.038614  0.338913   3.389130   Low
+256  ING TRx  INGREZZA  0011Q000028pkRU     KEVIN WILLIAMS        2.0        0.0  49.790672  115.038614  0.338913   3.389130   Low
+257  ING TRx  INGREZZA  0013600000QGiQY       REBECCA ROMA        2.0        0.0  49.790672  115.038614  0.338913   3.389130   Low
+258  ING TRx  INGREZZA  00136000017c0hE        LISA WELDON        2.0        0.0  49.790672  115.038614  0.338913   3.389130   Low
+259  ING TRx  INGREZZA  00136000013Opuh      PATRICIA ARES        2.0        0.0  49.790672  115.038614  0.338913   3.389130   Low
+260  ING TRx  INGREZZA  00136000013OrRC        JAMES GREER        1.4        0.0  49.790672  115.038614  0.337006   3.370064   Low
+261  ING TRx  INGREZZA  0013600000IyGMH        FIONA GUPTA        1.0        0.0  49.790672  115.038614  0.335738   3.357376   Low
+262  ING TRx  INGREZZA  0011Q0000228etq     JENNIFER MAYER        1.0        0.0  49.790672  115.038614  0.335738   3.357376   Low
+263  ING TRx  INGREZZA  0013600000hqQ7h     PAUL MARKOVITZ        1.0        0.0  49.790672  115.038614  0.335738   3.357376   Low
+264  ING TRx  INGREZZA  0013600000QGiVO       RAJESH PAHWA        1.0        0.0  49.790672  115.038614  0.335738   3.357376   Low
+265  ING TRx  INGREZZA  00136000019SCVy   MARIAN FINEHIRSH        1.0        0.0  49.790672  115.038614  0.335738   3.357376   Low
+266  ING TRx  INGREZZA  0013600001HnQzu          ADAM LOWY        1.0        0.0  49.790672  115.038614  0.335738   3.357376   Low
+267  ING TRx  INGREZZA  0013600000IyGNr      PETER LE WITT        0.0        0.0  49.790672  115.038614  0.332574   3.325738   Low}
+2023-10-30 16:16:14 [INFO] Executed in: 0.21955347061157227s
+2023-10-30 16:18:08 [INFO] Question: Get all the rows with label med.
+2023-10-30 16:18:08 [INFO] Running PandasAI with openai LLM...
+2023-10-30 16:18:08 [INFO] Prompt ID: b99edb8e-6d9f-42a6-af18-f417a8ac5053
+2023-10-30 16:18:08 [INFO] Using prompt: You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 268 rows and 11 columns.
+This is the metadata of the dataframe dfs[0]:
+kri_name,product,speaker_id,speaker_name,ING_Count,OLD Score,AVG,STD,N DIST,New Score,LABEL
+ING TRx,INGREZZA,00136000013Op3o,AMITA PATEL,615.4,4.13,49.79067164179103,4747122941,0.999999559903642,9.99999559903642,High
+ING TRx,INGREZZA,00136000013Opa5,VADIM BARAM,815.6,5.77,49.79067164179103,6506434060,0.9999999999860241,9.99999999986024,High
+ING TRx,INGREZZA,0013600001oj4QM,JULIE WATERBURY,537.8,3.49,49.79067164179103,8462023528,0.9999889298276239,9.999889298276239,High
+ING TRx,INGREZZA,00136000016woDx,ROBERT MORTON,1330.2,10.0,49.79067164179103,9406102239,1.0,10.0,High
+ING TRx,INGREZZA,0011Q00002Cd3pl,FARRUKH KUREISHY,572.0,3.77,49.79067164179103,6255765990,0.9999971796277325,9.999971796277325,High
+</dataframe>
+
+<conversation>
+User: Get all the rows with label med.
+</conversation>
+
+This is the initial python function. Do not change the params. Given the context, use the right dataframes.
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Take a deep breath and reason step-by-step. Act as a senior data analyst.
+In the answer, you must never write the "technical" names of the tables.
+Based on the last message in the conversation:
+- return the updated analyze_data function wrapped within ```python ```
+2023-10-30 16:18:31 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    
+    # Filter rows with label "med"
+    filtered_df = dfs[0][dfs[0]['LABEL'] == 'med']
+    
+    # Return the filtered dataframe
+    return {"type": "dataframe", "value": filtered_df}
+```
+
+2023-10-30 16:18:31 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    filtered_df = dfs[0][dfs[0]['LABEL'] == 'med']
+    return {'type': 'dataframe', 'value': filtered_df}
+        ```
+2023-10-30 16:18:31 [INFO] Answer: {'type': 'dataframe', 'value': Empty DataFrame
+Columns: [kri_name, product, speaker_id, speaker_name, ING_Count, OLD Score, AVG, STD, N DIST, New Score, LABEL]
+Index: []}
+2023-10-30 16:18:31 [INFO] Executed in: 23.994487047195435s
+2023-10-30 16:18:51 [INFO] Question: Get all the rows with label high.
+2023-10-30 16:18:51 [INFO] Running PandasAI with openai LLM...
+2023-10-30 16:18:51 [INFO] Prompt ID: dd1d29eb-e9f9-4607-b438-2ebe42c06ca3
+2023-10-30 16:18:51 [INFO] Using cached response
+2023-10-30 16:18:51 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    
+    # Filter rows with label "High"
+    filtered_df = dfs[0][dfs[0]['LABEL'] == 'High']
+    
+    # Return the filtered dataframe
+    return {"type": "dataframe", "value": filtered_df}
+```
+
+2023-10-30 16:18:51 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    filtered_df = dfs[0][dfs[0]['LABEL'] == 'High']
+    return {'type': 'dataframe', 'value': filtered_df}
+        ```
+2023-10-30 16:18:51 [INFO] Answer: {'type': 'dataframe', 'value':    kri_name   product       speaker_id          speaker_name  ING_Count  OLD Score        AVG         STD    N DIST  New Score LABEL
+0   ING TRx  INGREZZA  00136000016woDx         ROBERT MORTON     1330.2      10.00  49.790672  115.038614  1.000000  10.000000  High
+1   ING TRx  INGREZZA  00136000013Opa5           VADIM BARAM      815.6       5.77  49.790672  115.038614  1.000000  10.000000  High
+2   ING TRx  INGREZZA  00136000013Op3o           AMITA PATEL      615.4       4.13  49.790672  115.038614  1.000000   9.999996  High
+3   ING TRx  INGREZZA  0011Q00002Cd3pl      FARRUKH KUREISHY      572.0       3.77  49.790672  115.038614  0.999997   9.999972  High
+4   ING TRx  INGREZZA  0013600001oj4QM       JULIE WATERBURY      537.8       3.49  49.790672  115.038614  0.999989   9.999889  High
+5   ING TRx  INGREZZA  00136000013OoTi          ROMEO ISIDRO      293.4       1.48  49.790672  115.038614  0.982897   9.828968  High
+6   ING TRx  INGREZZA  00136000013OoYy            JOSE GAMEZ      218.0       0.86  49.790672  115.038614  0.928157   9.281566  High
+7   ING TRx  INGREZZA  00136000013Or4J           ISAK ISAKOV      201.2       0.73  49.790672  115.038614  0.905940   9.059400  High
+8   ING TRx  INGREZZA  0013600000QGiVU        RICHARD TROSCH      173.6       0.50  49.790672  115.038614  0.859090   8.590904  High
+9   ING TRx  INGREZZA  0013600001HkivQ            AMY BELNAP      169.0       0.46  49.790672  115.038614  0.849958   8.499584  High
+10  ING TRx  INGREZZA  0013600001rdpLd     BENEDETTO PALOMBO      169.0       0.46  49.790672  115.038614  0.849958   8.499584  High
+11  ING TRx  INGREZZA  00136000013OqGg   CHERIAN KARUNAPUZHA      168.6       0.46  49.790672  115.038614  0.849146   8.491461  High
+12  ING TRx  INGREZZA  0013600000Ry1CU  KHASHAYAR DASHTIPOUR      157.7       0.37  49.790672  115.038614  0.825885   8.258847  High
+13  ING TRx  INGREZZA  00136000013OpUq       EDWARD FRUITMAN      155.0       0.35  49.790672  115.038614  0.819788   8.197878  High
+14  ING TRx  INGREZZA  00136000013OpdA            KEVIN MAYS      146.4       0.28  49.790672  115.038614  0.799489   7.994895  High
+15  ING TRx  INGREZZA  00136000013Ooro            TODD GATES      129.2       0.13  49.790672  115.038614  0.754992   7.549922  High
+16  ING TRx  INGREZZA  0013600001Jqm4g        JAYSON GESULGA      123.8       0.09  49.790672  115.038614  0.739999   7.399993  High
+17  ING TRx  INGREZZA  00136000013RC8S          JILL TOLIVER      113.5       0.01  49.790672  115.038614  0.710145   7.101449  High
+18  ING TRx  INGREZZA  00136000013OpZi        FRANK ABENANTE      110.0       0.00  49.790672  115.038614  0.699646   6.996463  High
+19  ING TRx  INGREZZA  0011Q00002G32dS        ANGELA EUBANKS      108.0       0.00  49.790672  115.038614  0.693571   6.935710  High
+20  ING TRx  INGREZZA  00136000013RBtS        ILYA ROZENBERG      108.0       0.00  49.790672  115.038614  0.693571   6.935710  High
+21  ING TRx  INGREZZA  0011Q000026vXha           TRACY HICKS      107.4       0.00  49.790672  115.038614  0.691738   6.917379  High
+22  ING TRx  INGREZZA  00136000016vhJX         NIRAV PAVASIA      101.3       0.00  49.790672  115.038614  0.672836   6.728357  High
+23  ING TRx  INGREZZA  0013600000QGiU6          PRATAP CHAND       99.5       0.00  49.790672  115.038614  0.667169   6.671692  High
+24  ING TRx  INGREZZA  00136000015uMz5      MONIQUE GONZALEZ       98.9       0.00  49.790672  115.038614  0.665272   6.652718  High
+25  ING TRx  INGREZZA  0013600001VxY2g         MICHAEL KWIAT       96.2       0.00  49.790672  115.038614  0.656682   6.566818  High}
+2023-10-30 16:18:51 [INFO] Executed in: 0.25618934631347656s

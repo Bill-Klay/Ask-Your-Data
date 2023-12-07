@@ -7,7 +7,6 @@ import io
 from PIL import Image
 import json
 import io
-import matplotlib.pyplot as plt
 
 # Function to convert base64 image to bytes
 def get_image(base64_string):
@@ -37,6 +36,7 @@ if uploaded_file is not None:
         st.chat_message("assistant").write("Ask something about your data.")
         st.session_state["messages"] = []
         st.session_state["json_messages"] = []
+   
 
 if "messages" in st.session_state:
     for msg in st.session_state.messages:
@@ -92,5 +92,3 @@ if prompt := st.chat_input():
 
         with st.chat_message("assistant"):
             st.image(image)
-
-          

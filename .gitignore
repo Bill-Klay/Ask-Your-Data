@@ -1,3 +1,5 @@
 *.ipynb
 my_env
 *.xlsx
+.toml
+.log
