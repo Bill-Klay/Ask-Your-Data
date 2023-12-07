@@ -21,7 +21,7 @@ with st.sidebar:
         st.download_button("Export Chat", json_string, file_name='Chat History.json', mime='application/json')
 
 st.title("💬 Chatbot")
-st.caption("🚀 A streamlit chatbot powered by OpenAI LLM")
+st.caption("🚀 A streamlit chatbot powered by GPT-4")
 if "chat_messages" not in st.session_state:
     st.session_state.chat_messages = []
     st.session_state.chat_messages.append({"role": "assistant", "content": "How can I help you?"})

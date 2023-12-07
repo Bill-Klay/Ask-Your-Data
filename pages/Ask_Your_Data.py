@@ -23,7 +23,7 @@ with st.sidebar:
         st.download_button("Export Chat", json_string, file_name='Chat History.json', mime='application/json')
 
 st.title("📝 File Q&A")
-st.caption("🚀 A streamlit chatbot powered by OpenAI LLM")
+st.caption("🚀 A streamlit chatbot powered by GPT-4")
 uploaded_file = st.file_uploader("Upload a file", type=("xlsx"))
 
 if uploaded_file is not None:
