@@ -13,7 +13,7 @@ def get_image(base64_string):
     return io.BytesIO(decoded_bytes)
 
 with st.sidebar:
-    st.session_state.openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
+    st.session_state.openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password", value=st.session_state.openai_api_key)
     "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
     "[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/llm-examples?quickstart=1)"
     if "json_chat_messages" in st.session_state:
@@ -37,7 +37,7 @@ if "chat_messages" in st.session_state:
             with st.chat_message(msg["role"]):
                 st.image(msg['content'])
 
-if prompt := st.chat_input():
+if prompt := st.chat_input(max_chars=4000):
     if "openai_api_key" not in st.session_state:
         st.info("Please add your OpenAI API key to continue.")
         st.stop()
