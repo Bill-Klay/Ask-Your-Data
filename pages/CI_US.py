@@ -7,6 +7,7 @@ import io
 from PIL import Image
 import json
 import io
+import time
 
 uri = 'mssql+pyodbc://10.0.100.175/IndustryData_Chatbot?driver=SQL+Server+Native+Client+11.0'
 load_dataframe = False
@@ -60,6 +61,7 @@ if st.session_state.select_company != st.session_state.prev_company:
     load_dataframe = True
 
 # Only fetch data and show the dataframe header when both year and company have been selected
+start = time.time()
 if load_dataframe:
     st.caption("Peek into the uploaded dataframe:")
     with st.spinner("Loading dataframe..."):
@@ -73,6 +75,8 @@ if load_dataframe:
         st.session_state.messages_chat.append({"role": "assistant", "content": "Ask something about your data"})
 elif not load_dataframe and st.session_state.select_year is not None and st.session_state.select_company is not None:
     st.dataframe(st.session_state.df.head(3))
+end = time.time()
+st.caption(f"Time taken to load dataframe: {end - start} seconds")
 
 if "messages_chat" in st.session_state:
     for msg in st.session_state.messages_chat:
