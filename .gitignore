@@ -3,3 +3,6 @@ my_env
 *.xlsx
 .toml
 .log
+.png
+.wal
+csv
