@@ -106,7 +106,6 @@ if prompt := st.chat_input(max_chars=4000):
     llm = OpenAI(api_token = st.session_state.openai_api_key )
     df = SmartDataframe(st.session_state.df, config={"llm": llm, "conversational": False})
     
-    query_start = time.time()
     with st.spinner('Executing user prompt...'):
         response = df.chat(prompt)
     
@@ -131,9 +130,6 @@ if prompt := st.chat_input(max_chars=4000):
 
         with st.chat_message("assistant"):
             st.image(image)
-
-    query_end = time.time()
-    st.session_state.messages_chat.append({"role": "assistant", "content": query_end-query_start})
     
 
 
