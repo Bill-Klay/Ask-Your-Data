@@ -68,9 +68,9 @@ if load_dataframe:
         st.dataframe(st.session_state.df.head(3))
     if "messages_chat" not in st.session_state:
         # st.chat_message("assistant").write("Ask something about your data.")
-        st.session_state.messages_chat.append({"role": "assistant", "content": "Ask something about your data"})
         st.session_state["messages_chat"] = []
         st.session_state["json_messages_chat"] = []
+        st.session_state.messages_chat.append({"role": "assistant", "content": "Ask something about your data"})
 elif not load_dataframe and st.session_state.select_year is not None and st.session_state.select_company is not None:
     st.dataframe(st.session_state.df.head(3))
 
