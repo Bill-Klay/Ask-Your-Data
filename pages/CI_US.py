@@ -133,7 +133,7 @@ if prompt := st.chat_input(max_chars=4000):
             st.image(image)
 
     query_end = time.time()
-    st.chat_message("assistant").write(query_end-query_start)
+    st.session_state.messages_chat.append({"role": "assistant", "content": query_end-query_start})
     
 
 
