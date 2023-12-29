@@ -47,7 +47,7 @@ if "select_year" not in st.session_state:
 if "df" not in st.session_state:
     st.session_state.df = None
 
-st.session_state.select_year = col1.selectbox('Select Year', ('2018', '2019', '2020', '2021', '2022'), placeholder='Select a year')
+st.session_state.select_year = col1.selectbox('Select Year', ('2018', '2019', '2020', '2021', '2022'), index=None, placeholder='Select a year')
 
 # Always show the company select box, but only populate it after a year is selected
 if st.session_state.select_year is not None and not st.session_state.company_list:
