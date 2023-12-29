@@ -61,8 +61,9 @@ if st.session_state.select_company != st.session_state.prev_company:
     load_dataframe = True
 
 # Only fetch data and show the dataframe header when both year and company have been selected
-start = time.time()
+
 if load_dataframe:
+    start = time.time()
     st.caption("Peek into the uploaded dataframe:")
     with st.spinner("Loading dataframe..."):
         query = f"SELECT * FROM dbo.[{st.session_state.select_year}_open_payments_data] WHERE submitting_Company_Name = '{st.session_state.select_company}'"
@@ -73,11 +74,11 @@ if load_dataframe:
         st.session_state["messages_chat"] = []
         st.session_state["json_messages_chat"] = []
         st.session_state.messages_chat.append({"role": "assistant", "content": "Ask something about your data"})
+        end = time.time()
+        st.caption(f"Time taken to load dataframe: {round(end-start, 3)} seconds")
+        st.caption(f"Number of rows in dataframe: {len(st.session_state.df)}")
 elif not load_dataframe and st.session_state.select_year is not None and st.session_state.select_company is not None:
     st.dataframe(st.session_state.df.head(3))
-end = time.time()
-st.caption(f"Time taken to load dataframe: {end - start} seconds")
-st.caption(f"Number of rows in dataframe: {len(st.session_state.df)}")
 
 if "messages_chat" in st.session_state:
     for msg in st.session_state.messages_chat:
@@ -92,7 +93,7 @@ if "messages_chat" in st.session_state:
                 st.image(msg['content'])
 
 if prompt := st.chat_input(max_chars=4000):
-    start = time.time()
+    query_start = time.time()
     if "openai_api_key" not in st.session_state:
         st.info("Please add your OpenAI API key to continue.")
         st.stop()
@@ -130,6 +131,9 @@ if prompt := st.chat_input(max_chars=4000):
 
         with st.chat_message("assistant"):
             st.image(image)
+    
+    query_end = time.time()
+    st.chat_message("assistant").write(f"Time taken to answer: {round(query_end-query_start, 3)}")
     
 
 
