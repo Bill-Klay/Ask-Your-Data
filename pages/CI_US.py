@@ -107,7 +107,8 @@ if prompt := st.chat_input(max_chars=4000):
     start = time.time()
     with st.spinner('Executing user prompt...'):
         response = df.chat(prompt)
-    
+    end = time.time()
+    st.caption(f"Time taken to load answer: {end - start} seconds")
     if response is not None:
         st.session_state.messages_chat.append({"role": "assistant", "content": response})
         if type(response) is str or type(response) is int or type(response) is float:
@@ -129,6 +130,3 @@ if prompt := st.chat_input(max_chars=4000):
 
         with st.chat_message("assistant"):
             st.image(image)
-    
-    end = time.time()
-    st.caption(f"Time taken to load answer: {end - start} seconds")
