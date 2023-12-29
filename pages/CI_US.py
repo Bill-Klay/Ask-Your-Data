@@ -77,6 +77,7 @@ elif not load_dataframe and st.session_state.select_year is not None and st.sess
     st.dataframe(st.session_state.df.head(3))
 end = time.time()
 st.caption(f"Time taken to load dataframe: {end - start} seconds")
+st.caption(f"Number of rows in dataframe: {len(st.session_state.df)}")
 
 if "messages_chat" in st.session_state:
     for msg in st.session_state.messages_chat:
@@ -103,7 +104,7 @@ if prompt := st.chat_input(max_chars=4000):
     st.chat_message("user").write(prompt)
     llm = OpenAI(api_token = st.session_state.openai_api_key )
     df = SmartDataframe(st.session_state.df, config={"llm": llm, "conversational": False})
-    
+    start = time.time()
     with st.spinner('Executing user prompt...'):
         response = df.chat(prompt)
     
@@ -128,3 +129,6 @@ if prompt := st.chat_input(max_chars=4000):
 
         with st.chat_message("assistant"):
             st.image(image)
+    
+    end = time.time()
+    st.caption(f"Time taken to load answer: {end - start} seconds")
