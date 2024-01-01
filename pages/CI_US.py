@@ -113,7 +113,7 @@ if prompt := st.chat_input(max_chars=4000):
     if response is not None:
         st.session_state.messages_chat.append({"role": "assistant", "content": response})
         if type(response) is str or type(response) is int or type(response) is float:
-            st.chat_message("assistant").write(response)
+            st.chat_message("assistant").write(str(response))
             st.session_state.json_messages_chat.append({"role": "assistant", "content": response })
         elif type(response) is SmartDataframe:
             with st.chat_message("assistant"):
