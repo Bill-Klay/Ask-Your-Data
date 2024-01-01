@@ -28,6 +28,7 @@ with st.sidebar:
         json_string = json.dumps(st.session_state['json_messages_chat'])
         st.download_button("Export Chat", json_string, file_name='Chat History.json', mime='application/json')
 
+
 st.title("📝 DB-QA")
 st.caption("🚀 A streamlit chatbot powered by GPT-4")
 
@@ -38,6 +39,8 @@ if "select_company" not in st.session_state:
     st.session_state.company_list = []
     st.session_state.select_company = None
     st.session_state.prev_company = None
+    st.session_state.dataframe_time = None
+    st.session_state.query_time = 0.000
 
 
 # Initialize the year select box with None
@@ -63,27 +66,30 @@ if st.session_state.select_company != st.session_state.prev_company:
 # Only fetch data and show the dataframe header when both year and company have been selected
 
 if load_dataframe:
-    start = time.time()
     st.caption("Peek into the uploaded dataframe:")
+    start = time.time()
     with st.spinner("Loading dataframe..."):
         query = f"SELECT * FROM dbo.[{st.session_state.select_year}_open_payments_data] WHERE submitting_Company_Name = '{st.session_state.select_company}'"
         st.session_state.df = pd.read_sql(query, con=uri)
         st.dataframe(st.session_state.df.head(3))
+    end = time.time()
+    st.session_state.dataframe_time = end - start
+    st.caption(f"Time taken to load dataframe: {round(st.session_state.dataframe_time, 3)} seconds")
+    st.caption(f"Number of rows in dataframe: {len(st.session_state.df)}")
     if "messages_chat" not in st.session_state:
         # st.chat_message("assistant").write("Ask something about your data.")
         st.session_state["messages_chat"] = []
         st.session_state["json_messages_chat"] = []
         st.session_state.messages_chat.append({"role": "assistant", "content": "Ask something about your data"})
-        end = time.time()
-        st.caption(f"Time taken to load dataframe: {round(end-start, 3)} seconds")
-        st.caption(f"Number of rows in dataframe: {len(st.session_state.df)}")
 elif not load_dataframe and st.session_state.select_year is not None and st.session_state.select_company is not None:
     st.dataframe(st.session_state.df.head(3))
+    st.caption(f"Time taken to load dataframe: {round(st.session_state.dataframe_time, 3)} seconds")
+    st.caption(f"Number of rows in dataframe: {len(st.session_state.df)}")
 
 if "messages_chat" in st.session_state:
     for msg in st.session_state.messages_chat:
         if isinstance(msg['content'], str) or isinstance(msg['content'], int) or isinstance(msg['content'], float):
-            st.chat_message(msg["role"]).write(msg['content'])
+            st.chat_message(msg["role"]).write(str(msg['content']))
         elif isinstance(msg['content'], SmartDataframe):
             with st.chat_message(msg["role"]):
                 response = pd.DataFrame(msg['content'], columns=msg['content'].columns)
@@ -93,7 +99,6 @@ if "messages_chat" in st.session_state:
                 st.image(msg['content'])
 
 if prompt := st.chat_input(max_chars=4000):
-    query_start = time.time()
     if "openai_api_key" not in st.session_state:
         st.info("Please add your OpenAI API key to continue.")
         st.stop()
@@ -107,12 +112,14 @@ if prompt := st.chat_input(max_chars=4000):
     llm = OpenAI(api_token = st.session_state.openai_api_key )
     df = SmartDataframe(st.session_state.df, config={"llm": llm, "conversational": False})
     
+    query_start = time.time()
     with st.spinner('Executing user prompt...'):
         response = df.chat(prompt)
+    query_end = time.time()
+    st.session_state.query_time = query_end - query_start
     
     if response is not None:
         st.session_state.messages_chat.append({"role": "assistant", "content": response})
-        print(type(response))
         if type(response) is SmartDataframe:
             with st.chat_message("assistant"):
                 response = pd.DataFrame(response, columns=response.columns)
@@ -132,9 +139,5 @@ if prompt := st.chat_input(max_chars=4000):
 
         with st.chat_message("assistant"):
             st.image(image)
-    
-    query_end = time.time()
-    st.chat_message("assistant").write(f"Time taken to answer: {round(query_end-query_start, 3)}")
-    
-
-
+    st.caption(f"Time taken to answer: {round(st.session_state.query_time, 3)} seconds")
+    # st.chat_message("assistant").write(f"Time taken to answer: {round(query_end-query_start, 3)}")
