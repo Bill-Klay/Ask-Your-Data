@@ -3,7 +3,6 @@ from pandasai.llm import OpenAI
 import streamlit as st
 import pandas as pd
 import base64
-import io
 from PIL import Image
 import json
 import io
