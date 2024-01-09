@@ -108,7 +108,7 @@ if prompt := st.chat_input(max_chars=4000):
     else:
         st.session_state.json_messages_chat.append({"role": "user", "content": prompt })
     st.chat_message("user").write(prompt)
-    llm = OpenAI(api_token = st.session_state.openai_api_key )
+    llm = OpenAI(api_token = st.session_state.openai_api_key)
     df = SmartDataframe(st.session_state.df, config={"llm": llm, "conversational": False})
     
     query_start = time.time()
