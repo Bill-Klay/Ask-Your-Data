@@ -1,8 +1,8 @@
 *.ipynb
 my_env
 *.xlsx
-.toml
-.log
-.png
-.wal
-csv
+*.toml
+*.log
+*.png
+*.wal
+*.csv
