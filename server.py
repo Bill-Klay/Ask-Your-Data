@@ -4,7 +4,7 @@ import app
 import os
 HOST = os.environ.get('SERVER_HOST', '10.0.100.176')
 try:
-    PORT = int(os.environ.get('SERVER_PORT', '5555'))
+    PORT = int(os.environ.get('SERVER_PORT', '6969'))
 except ValueError:
     PORT = 5555
 
