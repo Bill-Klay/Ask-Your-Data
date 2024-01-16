@@ -6,3 +6,6 @@ my_env
 *.png
 *.wal
 *.csv
+.config
+cache
+*.json
