@@ -1,14 +1,20 @@
 from flask import Flask, request, jsonify
 from pandasai import SmartDataframe
 from pandasai.llm import OpenAI
+from waitress import serve
 import pandas as pd
 import base64
 import io
-import os
-
 
 app = Flask(__name__)
 df = None
+
+app.config.from_pyfile('.config')
+
+# Access the configuration values
+API_KEY = app.config['OPENAI_API_KEY']
+SERVERNAME = app.config['SERVERNAME']
+DATABASE = app.config['DATABASE']
 
 # Function to convert base64 image to bytes
 def get_image(base64_string):
@@ -20,19 +26,22 @@ def get_image(base64_string):
 def db_connection():
     try:
         global df
-        uri = 'mssql+pyodbc://10.0.100.175/IndustryData_Chatbot?driver=SQL+Server+Native+Client+11.0'
+        global SERVERNAME
+        global DATABASE
+        uri = "mssql+pyodbc://" + SERVERNAME + "/" + DATABASE + "?driver=SQL+Server+Native+Client+11.0"
         year = request.args.get('year')
         company_name = request.args.get('company_name')
         query = f"SELECT * FROM dbo.[{year}_open_payments_data] WHERE submitting_Company_Name = '{company_name}'"
         df = pd.read_sql(query, con=uri)
-        llm = OpenAI(api_token = "")
+        llm = OpenAI(api_token = API_KEY, model = "gpt-4", temperature=0.5, max_tokens=1024, top_p=1, frequency_penalty=0, presence_penalty=0)
         df = SmartDataframe(df, config={"llm": llm, "conversational": False})
+        dataframe_length = len(df)
     except Exception as e:
         print(e)
         return jsonify({'msg': str(e)}), 400
     finally:
-        print(len(df))
-        return jsonify({'msg': 'success'}), 200
+        print("Client IP: " + request.remote_addr + " Query: " + query)
+        return jsonify({'msg': dataframe_length}), 200
     
 @app.route('/prompt', methods=['GET'])
 def process():
@@ -59,9 +68,12 @@ def index():
     return "Hello Friend! Yes, the server is running 🏃"
 
 if __name__ == '__main__':
-    HOST = os.environ.get('SERVER_HOST', 'localhost')
     try:
-        PORT = int(os.environ.get('SERVER_PORT', '5555'))
+        HOST = app.config['HOST']
+        PORT = app.config['PORT']
     except ValueError:
+        HOST = "localhost"
         PORT = 5555
-    app.run(HOST, PORT)
+
+    print("Server running 🏃 at ", HOST, " @ ", PORT)
+    serve(app, host=HOST, port=PORT)
