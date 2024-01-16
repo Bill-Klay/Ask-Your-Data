@@ -75,5 +75,5 @@ if __name__ == '__main__':
         HOST = "localhost"
         PORT = 5555
 
-    print("Server running 🏃 at ", HOST, " @ ", PORT)
+    print("Server running at ", HOST, " @ ", PORT)
     serve(app, host=HOST, port=PORT)
