@@ -1,10 +1,24 @@
 import io
+import os
+import toml
 import json
 import base64
 import openai
 from PIL import Image
 import streamlit as st
 from pandasai import SmartDataframe
+
+# Define the path to your config file
+config_path = './config.toml'
+
+# Check if the config file exists
+if os.path.isfile(config_path):
+    # Load the config file
+    config = toml.load(config_path)
+    st.session_state.openai_api_key = config['DEFAULT']['OPENAI_API_KEY']
+else:
+    st.info("Could not find OpenAI Key or Config file")
+    st.stop() 
 
 # Function to convert base64 image to bytes
 def get_image(base64_string):
@@ -13,10 +27,6 @@ def get_image(base64_string):
     return io.BytesIO(decoded_bytes)
 
 with st.sidebar:
-    if "openai_api_key" in st.session_state:
-        st.session_state.openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password", value=st.session_state.openai_api_key)
-    else:
-        st.session_state.openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
     "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
     "[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/llm-examples?quickstart=1)"
     if "json_chat_messages" in st.session_state:

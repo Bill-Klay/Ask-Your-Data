@@ -2,14 +2,33 @@ from pandasai import SmartDataframe
 from pandasai.llm import OpenAI
 import streamlit as st
 import pandas as pd
-import base64
 from PIL import Image
+import base64
 import json
-import io
 import time
+import toml
+import os
+import io
 
-uri = 'mssql+pyodbc://10.0.100.175/IndustryData_Chatbot?driver=SQL+Server+Native+Client+11.0'
+# Define the path to your config file
+config_path = './config.toml'
+
+# Check if the config file exists
+if os.path.isfile(config_path):
+    # Load the config file
+    config = toml.load(config_path)
+    st.session_state.openai_api_key = config['DEFAULT']['OPENAI_API_KEY']
+else:
+    st.info("Could not find OpenAI Key or Config file")
+    st.stop() 
+
+# Access the configuration variables
+DATABASE = config['DEFAULT']['DATABASE']
+SERVERNAME = config['DEFAULT']['SERVERNAME']
+
+uri = "mssql+pyodbc://" + SERVERNAME + "/" + DATABASE + "?driver=SQL+Server+Native+Client+11.0"
 load_dataframe = False
+
 # Function to convert base64 image to bytes
 def get_image(base64_string):
     base64_bytes = base64_string.encode('utf-8')
@@ -17,10 +36,6 @@ def get_image(base64_string):
     return io.BytesIO(decoded_bytes)
 
 with st.sidebar:
-    if "openai_api_key" in st.session_state:
-        st.session_state.openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password", value=st.session_state.openai_api_key)
-    else:
-        st.session_state.openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
     "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
     "[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/llm-examples?quickstart=1)"
     if "json_messages_chat" in st.session_state:
