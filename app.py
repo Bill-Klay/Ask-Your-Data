@@ -59,6 +59,8 @@ def db_connection():
        query = f"SELECT * FROM dbo.[{year}_open_payments_data] WHERE submitting_Company_Name = '{company_name}'"
        # Execute SQL query and store result in dataframe
        df = pd.read_sql(query, con=uri)
+       # Convert few lines to JSON format for view
+       response = df.head(4).to_json(orient="records")
        # Initialize OpenAI model
        llm = OpenAI(api_token = API_KEY, model = "gpt-4", temperature=0.5, max_tokens=1024, top_p=1, frequency_penalty=0, presence_penalty=0)
        # Convert dataframe to SmartDataframe
@@ -70,7 +72,7 @@ def db_connection():
        return jsonify({'msg': str(e)}), 400
    finally:
        print("Client IP: " + request.remote_addr + " Query: " + query)
-       return jsonify({'msg': dataframe_length}), 200
+       return jsonify({'msg': response, 'msg_len': dataframe_length}), 200
 
 @app.route('/prompt', methods=['GET'])
 def process():
