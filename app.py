@@ -2,14 +2,17 @@
 from flask import Flask, request, jsonify
 from pandasai import SmartDataframe
 from pandasai.llm import OpenAI
+from sqlalchemy import text
 from waitress import serve
 import pandas as pd
+import matplotlib
 import base64
 import io
 
 # Initialize Flask application
 app = Flask(__name__)
 df = None
+matplotlib.use('Agg')
 
 # Load configuration from .config file
 app.config.from_pyfile('.config')
@@ -56,9 +59,9 @@ def db_connection():
        year = request.args.get('year')
        company_name = request.args.get('company_name')
        # Create SQL query
-       query = f"SELECT * FROM dbo.[{year}_open_payments_data] WHERE submitting_Company_Name = '{company_name}'"
+       query = f"SELECT * FROM dbo.[{year}_open_payments_data] WHERE [Submitting Company] = '{company_name}'"
        # Execute SQL query and store result in dataframe
-       df = pd.read_sql(query, con=uri)
+       df = pd.read_sql(text(query), con=uri)
        # Convert few lines to JSON format for view
        response = df.head(4).to_json(orient="records")
        # Initialize OpenAI model
@@ -86,20 +89,26 @@ def process():
    JSON response: The response to the given prompt.
    """
    global df
+   response_type = None
    prompt = request.args.get('prompt')
    response = df.chat(prompt)
+   print(response)
    if response is not None:
        if isinstance(response, SmartDataframe):
            pandas_df = pd.DataFrame(response, columns=response.columns)
            response = pandas_df.to_json(orient="records")
+           response_type = "table"
        else:
            response = str(response)
+           response_type = "text"
    else:
-       print(response, type(response))
-       print("Image found!")       
-       with open("./temp_chart.png", "rb") as img_file:
+       print("Found file")
+       response_type = "base64"       
+       with open("D:/Gen_AI/exports/charts/temp_chart.png", "rb") as img_file:
+           print("In the path")
            response = base64.b64encode(img_file.read()).decode('utf-8')
-   return jsonify({'msg': response}), 200
+           print(response)
+   return jsonify({'msg': response, 'type': response_type}), 200
 
 @app.route('/')
 def index():
